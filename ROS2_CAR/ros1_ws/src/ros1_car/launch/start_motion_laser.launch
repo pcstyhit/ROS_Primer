@@ -1,0 +1,8 @@
+<!-- 机器人启动文件：
+        1.启动底盘
+        2.启动激光雷达
+ -->
+<launch>
+        <include file="$(find ros_arduino_python)/launch/arduino.launch" />
+        <include file="$(find hls_lfcd_lds_driver)/launch/hlds_laser.launch" />
+</launch>

@@ -1,0 +1,13 @@
+<!-- 
+    amcl测试文件
+        1. 配合ros1_car下面的start_tf_motion_laser.launch启动之后再启动.
+        2. amcl需要配合地图服务一起使用.
+ -->
+<launch>
+    <!-- 设置地图的配置文件 -->
+    <arg name="map" default="test_map.yaml" />
+    <!-- 运行地图服务器，并且加载设置的地图-->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find ros1_navi)/map/$(arg map)"/>
+    <!-- 启动AMCL节点 -->
+    <include file="$(find ros1_navi)/launch/params_amcl.launch" />
+</launch>

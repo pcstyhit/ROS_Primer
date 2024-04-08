@@ -1,0 +1,8 @@
+<!-- 
+    gmapping测试文件
+        1. 配合ros1_car下面的start_tf_motion_laser.launch启动之后再启动.
+        2. 实际上gmapping可以单独启动，不需要机器人地图数据.
+ -->
+<launch>
+        <include file="$(find ros1_navi)/launch/params_gmapping.launch" />
+</launch>

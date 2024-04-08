@@ -1,0 +1,17 @@
+<!-- 机器人启动文件：
+        当不包含机器人模型时，需要发布坐标变换
+ -->
+
+<launch>
+    <include file="$(find ros1_car)/launch/start_tf_motion_laser.launch" />    
+    <!-- 启动SLAM节点 -->
+    <include file="$(find ros1_navi)/launch/params_gmapping.launch" />
+    <!-- 设置地图的配置文件 -->
+    <arg name="map" default="test_map.yaml" />
+    <!-- 运行地图服务器，并且加载设置的地图-->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find ros1_navi)/map/$(arg map)"/>
+    <!-- 启动AMCL节点 -->
+    <include file="$(find ros1_navi)/launch/params_amcl.launch" />
+    <!-- 运行move_base节点 -->
+    <include file="$(find ros1_navi)/launch/params_move_base.launch" />
+</launch>

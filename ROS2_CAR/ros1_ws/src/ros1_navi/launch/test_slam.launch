@@ -1,0 +1,20 @@
+<!-- 
+    slam测试文件
+        1. 配合ros1_car下面的start_tf_motion_laser.launch启动之后再启动.
+        2. 配合gammping一起使用.
+        3. 配合map_server一起使用.
+        4. 配合amcl一起使用.
+        5. 配合move_base一起使用.
+ -->
+<launch>
+    <!-- 启动SLAM节点 -->
+    <include file="$(find ros1_navi)/launch/params_gmapping.launch" />
+    <!-- 设置地图的配置文件 -->
+    <arg name="map" default="test_map.yaml" />
+    <!-- 运行地图服务器，并且加载设置的地图-->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find ros1_navi)/map/$(arg map)"/>
+    <!-- 启动AMCL节点 -->
+    <include file="$(find ros1_navi)/launch/params_amcl.launch" />
+    <!-- 运行move_base节点 -->
+    <include file="$(find ros1_navi)/launch/params_move_base.launch" />
+</launch>

@@ -1,12 +1,12 @@
-# 1 通过Turtlebot3案例了解NAVI2
+# 1 通过 Turtlebot3 案例了解 NAVI2
 
-## 1.1 Ubuntu20.04安装ROS2(Foxy)
+## 1.1 Ubuntu20.04 安装 ROS2(Foxy)
 
 > 参考内容：
 >
 > [官网给出的教程](https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html)
 
-1. 换源，输入`sudo gedit /etc/apt/sources.list`这里选择的是中科大的源，如果你是在Ubuntu内部选择的软件源，笔者遇到过安装ROS2时候提示没有depends的情况，于是这里手动换源，将文件源更改如下：
+1. 换源，输入`sudo gedit /etc/apt/sources.list`这里选择的是中科大的源，如果你是在 Ubuntu 内部选择的软件源，笔者遇到过安装 ROS2 时候提示没有 depends 的情况，于是这里手动换源，将文件源更改如下：
 
 ```shell
 deb https://mirrors.ustc.edu.cn/ubuntu/ focal main restricted universe multiverse
@@ -42,44 +42,44 @@ LC_TELEPHONE=zh_CN.UTF-8
 LC_MEASUREMENT=zh_CN.UTF-8
 LC_IDENTIFICATION=zh_CN.UTF-8
 LC_ALL=
-pldz@pldz-pc:~$ 
+pldz@pldz-pc:~$
 ```
 
-4. 获取GPG秘钥：`sudo apt update && sudo apt install curl -y`然后`sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg`，此时如果提示无法访问到网站，则添加host：
+4. 获取 GPG 秘钥：`sudo apt update && sudo apt install curl -y`然后`sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg`，此时如果提示无法访问到网站，则添加 host：
 
 - 1. 访问 `https://tool.lu/ip/` 并输入域名 `raw.githubusercontent.com`，查询 ip 地址，这里查询到的是 `185.199.108.133`
 
 ![IP地址查询](./pics/2023-04-20-22-39-31.png)
 
-- 2. 修改 `sudo gedit /etc/hosts`文件,并手动添加DNS解析：
+- 2. 修改 `sudo gedit /etc/hosts`文件,并手动添加 DNS 解析：
 
 ![手动添加IP](./pics/2023-04-20-22-42-02.png)
 
-5. 添加ROS2的仓库：`echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null`
+5. 添加 ROS2 的仓库：`echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null`
 
 6. 更新源和软件：`sudo apt-get update && sudo apt-get upgrade`
 
-7. 下载ROS2 Foxy：`sudo apt install ros-foxy-desktop python3-argcomplete`
+7. 下载 ROS2 Foxy：`sudo apt install ros-foxy-desktop python3-argcomplete`
 
-8. 下载完成后下载ROS2开发工具：`sudo apt install ros-dev-tools`
+8. 下载完成后下载 ROS2 开发工具：`sudo apt install ros-dev-tools`
 
-9. 将ROS2添加到环境变量：`sudo echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc`
+9. 将 ROS2 添加到环境变量：`sudo echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc`
 
 10. 激活环境变量验证安装：`source ~/.bashrc`，然后输入`ros2 run turtlesim turtlesim_node`如果能够看到小乌龟则代表成功
 
 ![ROS2 小乌龟例子](./pics/2023-04-20-22-45-02.png)
 
-## 1.2 运行ROS2 NAVI例子
+## 1.2 运行 ROS2 NAVI 例子
 
 ### 1.2.1 安装仿真的依赖项和软件
 
 > 参考内容
 >
-> [[ROS2 基础] Navigation2导航系统](https://fishros.org.cn/forum/topic/303/ros2-%E5%9F%BA%E7%A1%80-navigation2%E5%AF%BC%E8%88%AA%E7%B3%BB%E7%BB%9F)
+> [[ROS2 基础] Navigation2 导航系统](https://fishros.org.cn/forum/topic/303/ros2-%E5%9F%BA%E7%A1%80-navigation2%E5%AF%BC%E8%88%AA%E7%B3%BB%E7%BB%9F)
 >
-> [《动手学ROS2》10.10通过Nav2API进行导航](https://zhuanlan.zhihu.com/p/526385552)
+> [《动手学 ROS2》10.10 通过 Nav2API 进行导航](https://zhuanlan.zhihu.com/p/526385552)
 >
-> [ROS2与Navigation2入门教程-构建和安装Nav2](https://www.ncnynl.com/archives/202110/4702.html)
+> [ROS2 与 Navigation2 入门教程-构建和安装 Nav2](https://www.ncnynl.com/archives/202110/4702.html)
 
 1. 下载功能包：需要的功能包包括`turtlebot3`的模型和`cartographer`,以及`rviz2`和`gazebo`环境，其中的`gazebo`主要用于模拟真实的物理环境，`rviz2`是`ROS2`通讯的可视化工具
 
@@ -92,46 +92,58 @@ sudo apt install ros-foxy-rviz2
 sudo apt install ros-foxy-gazebo*
 ```
 
+3. 在运行仿真环境的时候，有时候会卡住在 gazebo 打开的界面，gazebo 初始化打开时候是会连接网络下载模型库,否则可能会出现**打开了环境，但是机器人一直在缩小的情况**
+
+4. 到 gazebo 的 github 官方网页: [osrf/gazebo_models](https://github.com/osrf/gazebo_models)，下载全部模型为 zip 文件
+
+![gazebo模型仓库](./pics/1_gazebo_models_repo.png)
+
+5. 解压 zip 文件夹并重命名为`models`，然后拷贝到`~/.gazebo`的目录下
+
+![移动gazebo模型](./pics/1_put_gazebo_models.png)
+
 ### 1.2.2 建立导航的地图(Mapping)
 
-1. 启动导航的物理仿真环境：创建一个启动gazebo物理仿真环境的脚本，比方说这里的`naviWorld.sh`（赋予可执行权限）
+1. 启动导航的物理仿真环境：创建一个启动 gazebo 物理仿真环境的脚本，比方说这里的`naviWorld.sh`（赋予可执行权限）
 
 ```shell
+# naviWorld.sh
 export TURTLEBOT3_MODEL=burger
 ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
 ```
 
 ![启动trutlebot3的gazebo物理环境](pics/2023-05-18-22-24-57.png)
 
-第一次启动，可能会出现一直在等待的状态，并且提示`Spawn service failed. Exiting.`， 错误的解决办法可以参考1.3.1的内容，杀死gazebo再次启动即可
+第一次启动，可能会出现一直在等待的状态，并且提示`Spawn service failed. Exiting.`， 错误的解决办法可以参考 1.3.1 的内容，杀死 gazebo 再次启动即可
 
 2. 启动建图指令：创建一个`RVIZ2`环境用于显示小车的状态，并建立起导航的地图，例如这里的`mapping.sh`（赋予可执行权限）：
 
 ```shell
+# mapping.sh
 export TURTLEBOT3_MODEL=burger
 ros2 launch turtlebot3_cartographer cartographer.launch.py use_sim_time:=True
 ```
 
-启动成功之后，会出现rviz2的界面：
+启动成功之后，会出现 rviz2 的界面：
 
 ![建图的rviz2画面](pics/2023-05-18-22-29-56.png)
 
-
-3. 控制机器人移动生成地图文件，输入命令：`ros2 run turtlebot3_teleop teleop_keyboard`启动键盘控制小车运动的节点，在此之前可以指定小车的类型：`export TURTLEBOT3_MODEL=burger`，例如下面的tele.sh
+3. 控制机器人移动生成地图文件，输入命令：`ros2 run turtlebot3_teleop teleop_keyboard`启动键盘控制小车运动的节点，在此之前可以指定小车的类型：`export TURTLEBOT3_MODEL=burger`，例如下面的 telep.sh
 
 ```shell
+# telep.sh
 export TURTLEBOT3_MODEL=burger
 ros2 run turtlebot3_teleop teleop_keyboard
 ```
 
 ![控制机器人运动生成大概的地图文件](pics/2023-05-18-22-37-12.png)
 
-4. 完成建图，生成导航的地图文件和信息，通过`teleop_keyboard`打开的终端控制机器人移动，等待图片大部分被扫描成功后，输入命令行调用`map_server`存储地图，其中的地图名称为test，之后会生成以该名字命名的`.pgm`/`yaml`等文件：`ros2 run nav2_map_server map_saver_cli -f testMap`
+4. 完成建图，生成导航的地图文件和信息，通过`teleop_keyboard`打开的终端控制机器人移动，等待图片大部分被扫描成功后，输入命令行调用`map_server`存储地图，其中的地图名称为 test，之后会生成以该名字命名的`.pgm`/`yaml`等文件：`ros2 run nav2_map_server map_saver_cli -f testMap`
 
 ```shell
 pldz@pldz-pc:/mnt/hgfs/VMware/ROS2_NAVI/1_Chapter/code$ ros2 run nav2_map_server map_saver_cli -f testMap
-[INFO] [1684547384.636100069] [map_saver]: 
-	map_saver lifecycle node launched. 
+[INFO] [1684547384.636100069] [map_saver]:
+	map_saver lifecycle node launched.
 	Waiting on external lifecycle transitions to activate
 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
 [INFO] [1684547384.636296866] [map_saver]: Creating
@@ -163,7 +175,7 @@ ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
 
 ```shell
 export TURTLEBOT3_MODEL=burger
-ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=true map:=testMap.yaml 
+ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=true map:=testMap.yaml
 ```
 
 ![启动RVIZ导航](pics/2023-05-28-17-32-26.png)
@@ -189,7 +201,7 @@ ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=true map:
 
 - 尝试解决办法：
 
-1. 杀死全部的`gazebo server`在命令行输入：`lsof -i`查看是否还有在运行的`gzserver`，记录程序的PID号，对输入`kill -9 <pid号>`杀死程序
+1. 杀死全部的`gazebo server`在命令行输入：`lsof -i`查看是否还有在运行的`gzserver`，记录程序的 PID 号，对输入`kill -9 <pid号>`杀死程序
 
 2. 再次输入脚本指令打开`gazebo`
 
@@ -199,8 +211,8 @@ ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=true map:
 
 ```shell
 pldz@pldz-pc:/mnt/hgfs/VMware/ROS2_NAVI/1_Chapter/code$ rerver map_saver_cli -os2 run nav2_map_server map_saver_cli -f testMap
-[INFO] [1684547337.249208762] [map_saver]: 
-	map_saver lifecycle node launched. 
+[INFO] [1684547337.249208762] [map_saver]:
+	map_saver lifecycle node launched.
 	Waiting on external lifecycle transitions to activate
 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
 [INFO] [1684547337.249693695] [map_saver]: Creating

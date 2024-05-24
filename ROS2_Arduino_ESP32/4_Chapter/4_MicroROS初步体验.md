@@ -1,4 +1,4 @@
-# 1 MircoROS 初步体验
+# 4 MircoROS 初步体验
 
 > 这里还是强烈推荐使用 ros2 humble 也就是 Ubuntu22.04 的默认版本，如果大家是其他版本的，建议使用 docker 来模拟 micro ros 环境`sudo docker run -it --net=host -v /dev:/dev --privileged ros:humble`
 
@@ -13,14 +13,14 @@ microROS Firmware： microROS Firmware 指的是安装在微控制器上的具�
 
 microROS Agent： microROS Agent 是一个桥接软件，它允许微控制器（运行 microROS）与运行标凈 ROS 2 的更大的计算系统进行通信。这种通信通常通过网络如串行端口、UDP 或其他通信协议实现。microROS Agent 在较大的系统上运行，作为一个节点接收和发送消息，充当微控制器和其他 ROS 2 实体之间的中介。
 
-## 1.1 在 Linux 平台上快速体验 MircoROS
+## 4.1 在 Linux 平台上快速体验 MircoROS
 
 Tips: 如果你的 rosdep 是有效的话 这个例子是很好跑的, 科学上网很重要，或者采用国内大神的`rosdepc` [参考](https://www.guyuehome.com/35408)
 
 > 参考内容
 > [First micro-ROS Application on Linux](https://micro.ros.org/docs/tutorials/core/first_application_linux/)>
 
-### 1.1.1 下载官网的代码
+### 4.1.1 下载官网的代码
 
 跟着官网一起来(截止 2024.04.18 这些步骤都是有效的)
 
@@ -75,7 +75,7 @@ Continuing to install resolvable dependencies...
 
 ![rosdep问题解决](./pics/1_rosdep问题解决.jpg)
 
-### 1.1.1 创建 mirco-ros fireware workspace
+### 4.1.1 创建 mirco-ros fireware workspace
 
 - fireware workspace 是做什么的，我在这一步能不能跳过啊？ 问问万能的 GPT： firmware workspace 是一个特殊的目录结构和工作区，用于开发和构建特定于微控制器的固件。这个工作区包括了所有必要的组件来创建和配置微控制器固件，以便它能与 ROS 2 系统兼容和交互。
 
@@ -118,7 +118,7 @@ source install/local_setup.bash && ros2 run micro_ros_setup build_firmware.sh
 > - CMakeLists.txt：编译应用程序的脚本。
 >   如果我们想创建自定义应用程序，就在这个文件夹下创建一个叫<my_app>的文件夹，其中包含上述两个文件。然后还需要跑到 `src/uros/micro-ROS-demos/rclc/CMakeLists.txt` 中注册，通过添加以下行：`export_executable(<my_app>)`这样注册进来，好了 废话不多说用到再看
 
-### 1.1.3 体验 MicroROS 的发布和订阅
+### 4.1.3 体验 MicroROS 的发布和订阅
 
 做完上面两步，是时候来体验`mirco-ros`的发布和订阅了，其实也就是顺着官网的教程继续往下走,但是官网的`ping_pong`的例子太麻烦了，我们这之间上后续的发布和订阅的的例子，**但是这个例子的条件是你已经走完了上面那一步，有了那些依赖项**
 
@@ -371,7 +371,7 @@ install(TARGETS ${PROJECT_NAME}
 colcon build
 ```
 
-## 1.2 使用 ESP32 发布话题 体验 MircoROS 的通讯
+## 4.2 使用 ESP32 发布话题 体验 MircoROS 的通讯
 
 > Tips: 需要完成上面的`micro ros 的 fireware workspace`的构建
 
